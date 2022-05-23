@@ -3,29 +3,47 @@ import React from "react";
 import { arrayBuffer } from "stream/consumers";
 
 function App() {
-  abstract class User {
-    constructor(
-      private firstName: string,
-      private lastName: string,
-      protected nickName: string
-    ) {}
-    abstract getNickName(): void;
-    getFullName() {
-      return `${this.firstName} ${this.lastName}`;
+  type Words = {
+    [key: string]: string;
+  };
+  class Dict {
+    private words: Words;
+    constructor() {
+      this.words = {};
+    }
+    add(word: Word) {
+      if (this.words[word.term] === undefined) {
+        this.words[word.term] = word.def;
+      }
+    }
+    def(term: string) {
+      return this.words[term];
+    }
+    print() {
+      console.log(this.words);
+    }
+    del(term: string) {
+      if (this.words[term] === undefined) {
+        console.log(`cannot find key of "${term}"`);
+      } else {
+        delete this.words[term];
+      }
     }
   }
 
-  class Player extends User {
-    getNickName() {
-      console.log(this.nickName);
-    }
+  class Word {
+    constructor(public term: string, public def: string) {}
   }
 
-  const rabin = new Player("Rabin", "Bluebell", "라빈");
+  const kimchi = new Word("kimchi", "한국의 음식");
+  const dict = new Dict();
+  dict.add(kimchi);
+  dict.add(new Word("hamberger", "미국의 음식"));
+  console.log(dict.def("kimchi"));
+  dict.print();
+  dict.del("kimchi");
+  dict.print();
 
-  // console.log(rabin.nickName);
-  // console.log(rabin.getFullName());
-  rabin.getNickName();
   return <div className="App">hello world!</div>;
 }
 
