@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { type } from "os";
+import React from "react";
+import { arrayBuffer } from "stream/consumers";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  abstract class User {
+    constructor(
+      private firstName: string,
+      private lastName: string,
+      protected nickName: string
+    ) {}
+    abstract getNickName(): void;
+    getFullName() {
+      return `${this.firstName} ${this.lastName}`;
+    }
+  }
+
+  class Player extends User {
+    getNickName() {
+      console.log(this.nickName);
+    }
+  }
+
+  const rabin = new Player("Rabin", "Bluebell", "라빈");
+
+  // console.log(rabin.nickName);
+  // console.log(rabin.getFullName());
+  rabin.getNickName();
+  return <div className="App">hello world!</div>;
 }
 
 export default App;
